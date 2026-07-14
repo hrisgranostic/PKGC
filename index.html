@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<title>PKIGC — Portal Kebijakan Internal Granostic Center</title>
+<style>
+/* ── RESET & BASE ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  color: #14181F;
+  background: #EEF1F6;
+  min-height: 100vh;
+}
+a { text-decoration: none; color: inherit; }
+
+/* ── WARNA TEMA ───────────────────────────────────────────── */
+:root {
+  --merah:        #00A693; /* Hijau Persia */
+  --merah-tua:    #008576; /* Hover Hijau Persia */
+  --merah-muda:   #FFE4DA;
+  --biru-tua:     #131B33;
+  --biru:         #2F6FED;
+  --biru-muda:    #E9F0FE;
+  --abu:          #6B7280;
+  --abu-muda:     #E5E9F0;
+  --abu-bg:       #F6F8FB;
+  --putih:        #ffffff;
+  --teks:         #14181F;
+  --border:       #DDE2EA;
+  --hijau:        #15803D;
+  --hijau-bg:     #DCFCE7;
+  --kuning:       #A15C07;
+  --kuning-bg:    #FEF3C7;
+  --error-bg:     #FEE7E2;
+  --error-teks:   #C22B10;
+  --error-border: #F6BBAC;
+}
+
+/* ══════════════════════════════════════════════════════════
+   HEADER & NAVIGASI
+══════════════════════════════════════════════════════════ */
+.strip-atas {
+  background: var(--merah);
+  padding: 5px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+}
+.strip-atas a { color: rgba(255,255,255,0.85); }
+.strip-atas a:hover { color: #fff; text-decoration: underline; }
+
+header {
+  background: var(--putih);
+  border-bottom: 4px solid var(--merah);
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 76px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.logo-area { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+.logo-area img { height: 44px; width: auto; display: block; object-fit: contain; }
+
+.header-divider {
+  width: 1px; height: 44px;
+  background: var(--border);
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.nama-perusahaan {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--biru-tua);
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+}
+.nama-dept { font-size: 11px; font-weight: 400; color: var(--abu); }
+
+.search-header {
+  margin-left: auto;
+  display: flex;
+  max-width: 420px;
+  width: 100%;
+}
+.search-header input {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-right: none;
+  border-radius: 4px 0 0 4px;
+  padding: 9px 14px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  background: var(--abu-bg);
+  color: var(--teks);
+}
+.search-header input:focus { border-color: var(--biru); background: #fff; }
+.search-header button {
+  background: var(--merah);
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 9px 18px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  transition: background .15s;
+  white-space: nowrap;
+}
+.search-header button:hover { background: var(--merah-tua); }
+
+/* ── NAV UTAMA ── */
+nav.nav-utama {
+  background: var(--biru-tua);
+  padding: 0 20px;
+  display: flex;
+  gap: 0;
+}
+.nav-item {
+  padding: 11px 18px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.72);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all .15s;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+}
+.nav-item:hover { color: white; background: rgba(255,255,255,0.07); }
+.nav-item.aktif { color: white; border-bottom-color: var(--merah); background: rgba(255,255,255,0.1); }
+
+/* ══════════════════════════════════════════════════════════
+   HALAMAN DAFTAR
+══════════════════════════════════════════════════════════ */
+#halamanDaftar {}
+
+/* breadcrumb */
+.breadcrumb {
+  background: var(--abu-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 9px 20px;
+  font-size: 12px;
+  color: var(--abu);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.breadcrumb .sep { color: var(--border); font-size: 14px; }
+.breadcrumb .crumb-aktif { color: var(--biru); font-weight: 600; }
+.breadcrumb a:hover { text-decoration: underline; }
+
+/* layout daftar */
+.konten {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 22px 20px;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ── PANEL KIRI ── */
+.panel-kiri { display: flex; flex-direction: column; gap: 16px; }
+
+.kotak {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.kotak-kepala {
+  background: var(--biru-tua);
+  color: white;
+  padding: 10px 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kotak-isi { padding: 14px 16px; }
+
+.form-grup { margin-bottom: 13px; }
+.form-grup:last-child { margin-bottom: 0; }
+.form-label { font-size: 11px; font-weight: 700; color: var(--abu); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 5px; }
+.form-select, .form-input {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12.5px;
+  font-family: inherit;
+  color: var(--teks);
+  background: var(--abu-bg);
+  cursor: pointer;
+  outline: none;
+  appearance: auto;
+}
+.form-select:focus, .form-input:focus { border-color: var(--biru); background: #fff; }
+
+.daftar-jenis { list-style: none; }
+.item-jenis {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background .12s;
+  border-bottom: 1px solid var(--abu-muda);
+}
+.item-jenis:last-child { border-bottom: none; }
+.item-jenis:hover { background: var(--biru-muda); }
+.item-jenis.aktif { background: var(--biru-muda); color: var(--biru); font-weight: 700; }
+.jenis-nama { font-size: 12.5px; }
+.jenis-jumlah {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--biru-muda);
+  color: var(--biru-tua);
+  padding: 2px 8px;
+  border-radius: 10px;
+  min-width: 28px;
+  text-align: center;
+}
+.item-jenis.aktif .jenis-jumlah { background: var(--biru-tua); color: white; }
+
+.baris-stat {
+  display: flex; justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--abu-muda);
+  font-size: 12.5px;
+}
+.baris-stat:last-child { border-bottom: none; }
+.stat-kunci { color: var(--abu); }
+.stat-nilai { font-weight: 700; color: var(--biru-tua); }
+
+.info-kontak {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--abu);
+}
+.info-kontak strong { color: var(--teks); }
+
+/* ── PANEL KANAN: HASIL ── */
+.panel-kanan {}
+
+.bar-hasil {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.teks-hasil { font-size: 13px; color: var(--abu); }
+.teks-hasil strong { color: var(--teks); }
+
+.kontrol-kanan { display: flex; align-items: center; gap: 8px; }
+.label-sort { font-size: 12px; color: var(--abu); }
+.pilih-urut {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: inherit;
+  background: var(--abu-bg);
+  cursor: pointer;
+  outline: none;
+}
+
+/* KARTU PERATURAN */
+#daftarPeraturan {}
+
+.kartu-peraturan {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: box-shadow .18s;
+  cursor: pointer;
+}
+.kartu-peraturan:hover { box-shadow: 0 4px 16px rgba(28,45,94,0.12); border-color: #b0bcd8; }
+
+.kartu-atas {
+  padding: 14px 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.kartu-kiri { flex: 1; min-width: 0; }
+
+.kartu-nomor-baris {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+.badge-jenis {
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+}
+.badge-jenis.SK  { background: #dbeafe; color: #1e40af; }
+.badge-jenis.SOP { background: #f3e8ff; color: #6b21a8; }
+.badge-jenis.SE  { background: #fef9c3; color: #854d0e; }
+.badge-jenis.PKB { background: #dcfce7; color: #166534; }
+.badge-jenis.POL { background: #ffe4e6; color: #9f1239; }
+
+.kartu-nomor-teks { font-size: 12px; color: var(--abu); font-weight: 600; }
+
+.kartu-judul {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--biru);
+  line-height: 1.45;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.kartu-judul:hover { text-decoration: underline; color: var(--merah); }
+.kartu-judul mark { background: #fef08a; color: inherit; border-radius: 2px; padding: 0 2px; }
+
+.kartu-kanan { flex-shrink: 0; }
+
+.badge-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.status-berlaku    { background: var(--hijau-bg); color: var(--hijau); }
+.status-nonaktif   { background: #fee2e2; color: #991b1b; }
+.status-review     { background: var(--kuning-bg); color: var(--kuning); }
+
+.kartu-tags {
+  padding: 0 18px 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.tag-item {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--abu-muda);
+  color: var(--abu);
+  border: 1px solid #e0e0e0;
+  cursor: pointer;
+}
+.tag-item:hover { background: var(--biru-muda); color: var(--biru); border-color: var(--biru); }
+
+.kartu-abstrak-wrap {
+  border-top: 1px solid var(--abu-muda);
+  margin-top: 4px;
+}
+.kartu-abstrak-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--abu);
+  cursor: pointer;
+  background: var(--abu-bg);
+  user-select: none;
+}
+.kartu-abstrak-toggle:hover { background: #eaedf3; color: var(--biru); }
+.kartu-abstrak-toggle .chevron { font-size: 10px; transition: transform .2s; }
+.kartu-abstrak-toggle.buka .chevron { transform: rotate(180deg); }
+
+.kartu-abstrak-isi {
+  display: none;
+  padding: 12px 18px;
+  font-size: 12.5px;
+  color: #374151;
+  line-height: 1.7;
+  border-top: 1px solid var(--border);
+  background: #fdfdfd;
+}
+.kartu-abstrak-isi mark { background: #fef08a; border-radius: 2px; padding: 0 2px; }
+.kartu-abstrak-isi.tampil { display: block; }
+
+.kartu-footer {
+  padding: 9px 18px;
+  background: var(--abu-bg);
+  border-top: 1px solid var(--abu-muda);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.kartu-meta { font-size: 11.5px; color: var(--abu); display: flex; align-items: center; gap: 14px; }
+.kartu-meta span { display: flex; align-items: center; gap: 4px; }
+.tombol-unduh {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--merah);
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s;
+  text-decoration: none;
+}
+.tombol-unduh:hover { background: var(--merah-tua); }
+.tombol-detail {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--putih);
+  color: var(--biru);
+  border: 1px solid var(--biru);
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+.tombol-detail:hover { background: var(--biru); color: white; }
+.tombol-aksi { display: flex; gap: 6px; }
+
+.paginasi {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.pg {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12.5px;
+  cursor: pointer;
+  background: var(--putih);
+  transition: all .12s;
+  color: var(--teks);
+}
+.pg:hover { background: var(--biru-muda); border-color: var(--biru); color: var(--biru); }
+.pg.aktif  { background: var(--biru-tua); color: white; border-color: var(--biru-tua); font-weight: 700; }
+.pg.nonaktif { color: var(--abu); cursor: default; }
+.pg.nonaktif:hover { background: var(--putih); border-color: var(--border); color: var(--abu); }
+
+.kosong {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--abu);
+}
+.kosong-ikon { font-size: 44px; margin-bottom: 12px; }
+.kosong h3 { font-size: 16px; color: var(--teks); margin-bottom: 6px; }
+.kosong p { font-size: 13px; }
+
+/* ── HALAMAN DETAIL ── */
+#halamanDetail { display: none; }
+
+.detail-wrap { max-width: 960px; margin: 0 auto; padding: 22px 20px; }
+
+.tombol-kembali {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--biru);
+  cursor: pointer;
+  margin-bottom: 14px;
+  padding: 6px 12px;
+  border: 1px solid var(--biru);
+  border-radius: 4px;
+  background: var(--putih);
+  transition: all .15s;
+}
+.tombol-kembali:hover { background: var(--biru); color: white; }
+
+.detail-kepala {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-radius: 6px 6px 0 0;
+  border-bottom: none;
+  overflow: hidden;
+}
+.detail-kepala-strip {
+  background: var(--biru-tua);
+  padding: 16px 24px;
+}
+.detail-jenis-baris {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.detail-jenis-teks {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.detail-nomor-teks {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+.detail-judul {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: white;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+.detail-badge-baris { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.detail-kepala-meta {
+  padding: 16px 24px;
+  background: var(--abu-bg);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0;
+}
+.meta-sel {
+  padding: 10px 14px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.meta-sel:nth-child(2n) { border-right: none; }
+.meta-sel-kunci { font-size: 10.5px; font-weight: 700; color: var(--abu); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.meta-sel-nilai { font-size: 13px; font-weight: 600; color: var(--teks); }
+
+.detail-body {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 24px;
+}
+
+.detail-seksi-judul {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--abu);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--merah);
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.detail-abstrak {
+  background: var(--abu-bg);
+  border-left: 4px solid var(--biru-tua);
+  padding: 14px 18px;
+  border-radius: 0 4px 4px 0;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #374151;
+  margin-bottom: 24px;
+}
+
+.tabel-status {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-bottom: 24px;
+}
+.tabel-status th {
+  background: var(--biru-tua);
+  color: white;
+  padding: 9px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+}
+.tabel-status td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.tabel-status tr:nth-child(even) td { background: var(--abu-bg); }
+.tabel-status tr:last-child td { border-bottom: none; }
+.tabel-status a { color: var(--biru); text-decoration: underline; }
+
+.kotak-unduh {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.kotak-unduh-kepala {
+  background: var(--biru-tua);
+  color: white;
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kotak-unduh-isi { padding: 16px; }
+
+.item-unduh {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--abu-bg);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.item-unduh-kiri { display: flex; align-items: center; gap: 12px; }
+.pdf-ikon { font-size: 32px; }
+.pdf-info {}
+.pdf-nama { font-size: 13px; font-weight: 700; color: var(--teks); }
+.pdf-ukuran { font-size: 11px; color: var(--abu); }
+
+.tombol-unduh-besar {
+  background: var(--merah);
+  color: white;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background .15s;
+}
+.tombol-unduh-besar:hover { background: var(--merah-tua); }
+
+.tombol-buka-pdf {
+  background: var(--biru-tua);
+  color: white;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background .15s;
+}
+.tombol-buka-pdf:hover { background: var(--biru); }
+
+/* ── MODAL PDF VIEWER ── */
+.pdf-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 500;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+}
+.pdf-modal-overlay.buka { display: flex; }
+
+.pdf-modal {
+  background: var(--putih);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 960px;
+  height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+
+.pdf-modal-bar {
+  background: var(--biru-tua);
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.pdf-modal-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.pdf-modal-ikon { font-size: 18px; flex-shrink: 0; }
+.pdf-modal-nama {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pdf-modal-sub { font-size: 11px; color: rgba(255,255,255,0.6); }
+
+.pdf-modal-aksi { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.pdf-modal-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.pdf-modal-btn:hover { background: rgba(255,255,255,0.28); }
+.pdf-modal-tutup {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: white;
+  width: 32px; height: 32px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+.pdf-modal-tutup:hover { background: rgba(200,57,43,0.7); }
+
+.pdf-modal-frame {
+  flex: 1;
+  background: #525659;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.pdf-modal-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+.pdf-modal-placeholder {
+  text-align: center;
+  color: rgba(255,255,255,0.8);
+  padding: 40px 20px;
+}
+.pdf-modal-placeholder .ph-ikon { font-size: 56px; margin-bottom: 14px; }
+.pdf-modal-placeholder h3 { font-size: 16px; font-weight: 700; color: white; margin-bottom: 8px; }
+.pdf-modal-placeholder p { font-size: 13px; line-height: 1.6; margin-bottom: 18px; color: rgba(255,255,255,0.7); }
+.pdf-modal-placeholder .ph-btn {
+  background: var(--merah);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s;
+}
+.pdf-modal-placeholder .ph-btn:hover { background: var(--merah-tua); }
+
+/* peraturan terkait */
+.daftar-terkait { list-style: none; }
+.item-terkait {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all .14s;
+  background: var(--abu-bg);
+}
+.item-terkait:hover { border-color: var(--biru); background: var(--biru-muda); }
+.terkait-ikon { font-size: 20px; flex-shrink: 0; }
+.terkait-info {}
+.terkait-nomor { font-size: 11px; font-weight: 700; color: var(--abu); margin-bottom: 2px; }
+.terkait-judul { font-size: 13px; font-weight: 600; color: var(--biru); }
+
+/* ── FOOTER ── */
+footer {
+  margin-top: 40px;
+  background: var(--biru-tua);
+  color: rgba(255,255,255,0.65);
+  font-size: 11.5px;
+}
+.footer-atas {
+  padding: 24px 20px;
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+}
+.footer-kolom-judul {
+  font-size: 12px;
+  font-weight: 800;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--merah);
+  display: inline-block;
+}
+.footer-kolom ul { list-style: none; }
+.footer-kolom li { margin-bottom: 5px; }
+.footer-kolom a { color: rgba(255,255,255,0.65); }
+.footer-kolom a:hover { color: white; text-decoration: underline; }
+.footer-bawah {
+  border-top: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+  padding: 12px 20px;
+  font-size: 11px;
+}
+.footer-bawah strong { color: rgba(255,255,255,0.9); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  header { height: auto; flex-wrap: wrap; padding: 12px 16px; gap: 10px; }
+  .header-divider, .nama-perusahaan, .nama-dept { display: none; }
+  .search-header { max-width: 100%; margin-left: 0; }
+  .konten { grid-template-columns: 1fr; padding: 16px; }
+  .panel-kiri { order: 2; }
+  .detail-kepala-meta { grid-template-columns: 1fr 1fr; }
+  .meta-sel:nth-child(2n) { border-right: none; }
+  .meta-sel:nth-child(odd) { border-right: 1px solid var(--border); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   HALAMAN LOGIN
+══════════════════════════════════════════════════════════ */
+#gerbangLogin {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(0,166,147,0.28), transparent 45%),
+    radial-gradient(circle at 88% 90%, rgba(47,111,237,0.22), transparent 45%),
+    linear-gradient(135deg, var(--biru-tua) 0%, #060912 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.kotak-login {
+  background: var(--putih);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 380px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+.login-kepala {
+  background: var(--merah);
+  padding: 28px 28px 22px;
+  text-align: center;
+  border-bottom: 4px solid var(--merah-tua);
+}
+.login-kepala img { height: 46px; width: auto; display: block; margin: 0 auto 12px; }
+.login-kepala h1 {
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+.login-kepala p {
+  color: rgba(255,255,255,0.8);
+  font-size: 11.5px;
+  margin-top: 4px;
+}
+.login-badan { padding: 26px 28px 28px; }
+.login-grup { margin-bottom: 16px; }
+.login-label {
+  font-size: 11px; font-weight: 700; color: var(--abu);
+  text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; display: block;
+}
+.login-input {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  font-size: 13.5px;
+  font-family: inherit;
+  outline: none;
+  background: var(--abu-bg);
+  color: var(--teks);
+  transition: border-color .15s;
+}
+.login-input:focus { border-color: var(--biru); background: #fff; }
+.tombol-login {
+  width: 100%;
+  background: var(--merah);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: background .15s;
+  margin-top: 4px;
+}
+.tombol-login:hover { background: var(--merah-tua); }
+.tombol-login:disabled { background: var(--abu); cursor: not-allowed; }
+.login-pesan {
+  font-size: 12px;
+  padding: 10px 12px;
+  border-radius: 5px;
+  margin-bottom: 16px;
+  display: none;
+}
+.login-pesan.tampil { display: block; }
+.login-pesan.error { background: var(--error-bg); color: var(--error-teks); border: 1px solid var(--error-border); }
+.login-pesan.loading { background: var(--biru-muda); color: var(--biru-tua); border: 1px solid #c7d6f0; }
+.login-footer {
+  text-align: center;
+  font-size: 10.5px;
+  color: var(--abu);
+  margin-top: 18px;
+  line-height: 1.6;
+}
+#appKonten { display: none; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     GERBANG LOGIN
+══════════════════════════════════════════════════════════ -->
+<div id="gerbangLogin">
+  <div class="kotak-login">
+    <div class="login-kepala">
+      <img id="loginLogo" src="https://lh3.googleusercontent.com/d/1Bo0fEb-lIgrCfHMjO8G6a4rd0L9rn5CC" alt="Granostic">
+      <h1>Portal Kebijakan Internal</h1>
+      <p>Akses khusus karyawan berwenang (BoD / Manager / Spv)</p>
+    </div>
+    <div class="login-badan">
+      <div class="login-pesan" id="loginPesan"></div>
+      <div class="login-grup">
+        <label class="login-label">Username</label>
+        <input type="text" class="login-input" id="inputUsername" autocomplete="username" placeholder="Masukkan username">
+      </div>
+      <div class="login-grup">
+        <label class="login-label">Password</label>
+        <input type="password" class="login-input" id="inputPassword" autocomplete="current-password" placeholder="Masukkan password">
+      </div>
+      <button class="tombol-login" id="tombolLogin" onclick="lakukan_login()">Masuk</button>
+      <div class="login-footer">
+        Lupa password? Hubungi HRGA&IT Department (ext. 301)<br>
+        untuk permintaan reset akses.
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="appKonten">
+<!-- STRIP ATAS -->
+<div class="strip-atas">
+  <span>🏢 Granostic &nbsp;|&nbsp; Portal Kebijakan Internal Granostic Center</span>
+  <span>⚙️ Dikelola: HRGA&IT Department &nbsp;|&nbsp; Kontak: ext. 301</span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-area">
+    <img src="https://lh3.googleusercontent.com/d/13fYVo8GG4_R75m5fcqNieWpTnePyB0cb" alt="Granostic" style="height:48px; width:auto; display:block;">
+  </div>
+  <div class="header-divider"></div>
+  <div>
+    <div class="nama-perusahaan">Granostic</div>
+    <div class="nama-dept">HRGA&IT Department</div>
+  </div>
+  <div class="search-header">
+    <input type="text" id="inputCari" placeholder="Cari nomor, judul, atau kata kunci..." oninput="lakukan_cari(this.value)" />
+    <button onclick="lakukan_cari(document.getElementById('inputCari').value)">🔍 Cari</button>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav-utama">
+  <div class="nav-item aktif" onclick="ganti_nav(this,'semua')">Beranda</div>
+  <div class="nav-item" onclick="ganti_nav(this,'SK')">Surat Keputusan Direksi</div>
+  <div class="nav-item" onclick="ganti_nav(this,'SOP')">Standar Prosedur Operasional</div>
+  <div class="nav-item" onclick="ganti_nav(this,'SE')">Memo Internal</div>
+  <div class="nav-item" onclick="ganti_nav(this,'PKB')">Perjanjian Kerja Sama</div>
+  <div class="nav-item" onclick="ganti_nav(this,'POL')">Kebijakan</div>
+</nav>
+
+<!-- BANNER KONFIGURASI — hanya muncul jika URL Sheets belum diisi -->
+<div id="bannerKonfigurasi" style="display:none; background:#fef3c7; border-bottom:2px solid #f59e0b; padding:10px 20px; align-items:center; gap:12px; font-size:12.5px; color:#92400e;">
+  <span style="font-size:18px;">⚙️</span>
+  <div>
+    <strong>Mode Demo — Data Contoh Aktif.</strong>
+    Untuk menampilkan peraturan nyata, buka file HTML ini, cari baris <code style="background:#fde68a;padding:1px 5px;border-radius:3px;">const SHEET_CSV_URL</code>, dan ganti nilainya dengan URL CSV Google Sheets Anda.
+  </div>
+  <button onclick="this.parentElement.style.display='none'" style="margin-left:auto;background:none;border:1px solid #f59e0b;border-radius:4px;padding:4px 10px;cursor:pointer;color:#92400e;font-size:12px;white-space:nowrap;">✕ Tutup</button>
+</div>
+
+<!-- ══════════════ HALAMAN DAFTAR ══════════════ -->
+<div id="halamanDaftar">
+  <div class="breadcrumb">
+    🏠 <a href="#" onclick="ke_daftar()">Beranda</a>
+    <span class="sep">›</span>
+    <span class="crumb-aktif" id="bcAktif">Semua Peraturan</span>
+  </div>
+
+  <div class="konten">
+    <!-- KIRI -->
+    <div class="panel-kiri">
+
+      <div class="kotak">
+        <div class="kotak-kepala">🔽 Pencarian Lanjutan</div>
+        <div class="kotak-isi">
+          <div class="form-grup">
+            <div class="form-label">Departemen Penerbit</div>
+            <select class="form-select" id="filterDept" onchange="terapkan_filter()">
+              <option value="">— Semua Departemen —</option>
+              <option value="HRD">HRGA&IT</option>
+              <option value="Finance &amp; Accounting">Finacc</option>
+              <option value="Clinic">Clinic</option>
+              <option value="Laboratory">Laboratory</option>
+              <option value="Sales &amp; Marketing">Marketing</option>
+	      <option value="Tim &amp; Mutu">Tim Mutu</option>
+              <option value="Board of Director">Direksi</option>
+            </select>
+          </div>
+          <div class="form-grup">
+            <div class="form-label">Tahun Terbit</div>
+            <select class="form-select" id="filterTahun" onchange="terapkan_filter()">
+              <option value="">— Semua Tahun —</option>
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
+          <div class="form-grup">
+            <div class="form-label">Status</div>
+            <select class="form-select" id="filterStatus" onchange="terapkan_filter()">
+              <option value="">— Semua Status —</option>
+              <option value="Berlaku">Berlaku</option>
+              <option value="Tidak Berlaku">Tidak Berlaku</option>
+              <option value="Dalam Review">Dalam Review</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="kotak">
+        <div class="kotak-kepala">📂 Jenis Peraturan</div>
+        <div class="kotak-isi" style="padding: 8px 10px;">
+          <ul class="daftar-jenis" id="daftarJenis"></ul>
+        </div>
+      </div>
+
+      <div class="kotak">
+        <div class="kotak-kepala">📊 Statistik Database</div>
+        <div class="kotak-isi">
+          <div class="baris-stat"><span class="stat-kunci">Total Peraturan</span><span class="stat-nilai" id="stTotal">—</span></div>
+          <div class="baris-stat"><span class="stat-kunci">Berlaku</span><span class="stat-nilai" id="stBerlaku">—</span></div>
+          <div class="baris-stat"><span class="stat-kunci">Tidak Berlaku</span><span class="stat-nilai" id="stNonAktif">—</span></div>
+          <div class="baris-stat"><span class="stat-kunci">Dalam Review</span><span class="stat-nilai" id="stReview">—</span></div>
+          <div class="baris-stat"><span class="stat-kunci">Pembaruan Terakhir</span><span class="stat-nilai">Jun 2026</span></div>
+        </div>
+      </div>
+
+      <div class="kotak">
+        <div class="kotak-kepala">📞 Contact Us</div>
+        <div class="kotak-isi">
+          <div class="info-kontak">
+            <strong>Pertanyaan seputar peraturan:</strong><br>
+            📞 Ext. 301<br>
+            📧 hrga.granostic@gmail.com<br>
+            📍 Granostic Tower, Lt. 3<br>
+            🕐 Senin–Jumat, 08.00–17.00
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- KANAN -->
+    <div class="panel-kanan">
+      <div class="bar-hasil">
+        <div class="teks-hasil">Menemukan <strong id="jmlHasil">0</strong> peraturan</div>
+        <div class="kontrol-kanan">
+          <span class="label-sort">Urutkan:</span>
+          <select class="pilih-urut" id="pilihUrut" onchange="terapkan_filter()">
+            <option value="terbaru">Terbaru</option>
+            <option value="terlama">Terlama</option>
+            <option value="az">A–Z Judul</option>
+          </select>
+        </div>
+      </div>
+      <div id="daftarPeraturan"></div>
+      <div class="paginasi" id="paginasi"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ HALAMAN DETAIL ══════════════ -->
+<div id="halamanDetail">
+  <div class="breadcrumb">
+    🏠 <a href="#" onclick="ke_daftar()">Beranda</a>
+    <span class="sep">›</span>
+    <a href="#" onclick="ke_daftar()" id="bcDetailJenis">Peraturan</a>
+    <span class="sep">›</span>
+    <span class="crumb-aktif" id="bcDetailJudul">Detail</span>
+  </div>
+
+  <div class="detail-wrap">
+    <div class="tombol-kembali" onclick="ke_daftar()">← Kembali ke Daftar</div>
+
+    <!-- KEPALA DETAIL -->
+    <div class="detail-kepala">
+      <div class="detail-kepala-strip">
+        <div class="detail-jenis-baris">
+          <span id="dBadgeJenis" class="badge-jenis SK">SK</span>
+          <span id="dNomor" class="detail-nomor-teks"></span>
+        </div>
+        <div id="dJudul" class="detail-judul"></div>
+        <div class="detail-badge-baris" id="dBadgeBaris"></div>
+      </div>
+      <div class="detail-kepala-meta" id="dMeta"></div>
+    </div>
+
+    <!-- BODY DETAIL -->
+    <div class="detail-body">
+
+      <!-- Abstrak -->
+      <div class="detail-seksi-judul">Abstrak / Ringkasan Peraturan</div>
+      <div class="detail-abstrak" id="dAbstrak"></div>
+
+      <!-- Status Peraturan -->
+      <div class="detail-seksi-judul">Status Peraturan</div>
+      <table class="tabel-status" id="dTabelStatus">
+        <thead><tr><th>Keterangan</th><th>Detail</th></tr></thead>
+        <tbody id="dStatusBody"></tbody>
+      </table>
+
+      <!-- Unduh Dokumen -->
+      <div class="detail-seksi-judul">Dokumen Peraturan</div>
+      <div class="kotak-unduh">
+        <div class="kotak-unduh-kepala">📁 File Tersedia — Buka atau Unduh</div>
+        <div class="kotak-unduh-isi">
+          <div class="item-unduh">
+            <div class="item-unduh-kiri">
+              <div class="pdf-ikon">📄</div>
+              <div class="pdf-info">
+                <div class="pdf-nama" id="dPdfNama">Dokumen.pdf</div>
+                <div class="pdf-ukuran">Format PDF · Tersimpan di Google Drive Perusahaan</div>
+              </div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="tombol-buka-pdf" onclick="tampil_pdf_modal()">👁 Buka PDF</button>
+              <button class="tombol-unduh-besar" onclick="unduh_pdf()">⬇ Unduh PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Peraturan Terkait -->
+      <div id="seksiTerkait" style="display:none">
+        <div class="detail-seksi-judul">Peraturan Terkait dari Departemen yang Sama</div>
+        <ul class="daftar-terkait" id="dTerkait"></ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-atas">
+    <div class="footer-kolom">
+      <div class="footer-kolom-judul">Tentang PKIGC</div>
+      <p style="font-size:12px;line-height:1.7;color:rgba(255,255,255,0.6);">
+        PKIGC adalah portal kebijakan internal Granostic Center untuk mendistribusikan peraturan, SOP, dan kebijakan perusahaan kepada seluruh karyawan secara terpusat.
+      </p>
+    </div>
+    <div class="footer-kolom">
+      <div class="footer-kolom-judul">Navigasi</div>
+      <ul>
+        <li><a href="#">Semua Peraturan</a></li>
+        <li><a href="#">Surat Keputusan Direksi</a></li>
+        <li><a href="#">Standar Prosedur Operasional</a></li>
+        <li><a href="#">Memo Internal</a></li>
+        <li><a href="#">Perjanjian Kerja Sama</a></li>
+      </ul>
+    </div>
+    <div class="footer-kolom">
+      <div class="footer-kolom-judul">Tautan Terkait</div>
+      <ul>
+        <li><a href="#">Google Drive Perusahaan</a></li>
+        <li><a href="#">Sistem HR Internal</a></li>
+        <li><a href="#">Email HRGA&IT Dept.</a></li>
+        <li><a href="#">Panduan Penggunaan</a></li>
+      </ul>
+    </div>
+    <div class="footer-kolom">
+      <div class="footer-kolom-judul">Infrastruktur</div>
+      <div style="font-size:12px;line-height:1.8;color:rgba(255,255,255,0.6);">
+        📊 Google Sheets — Database<br>
+        📁 Google Drive — Arsip PDF<br>
+        🌐 GitHub Pages — Hosting<br>
+     </div>
+    </div>
+  </div>
+  <div class="footer-bawah">
+    © 2026 <strong>Granostic</strong> · PKIGC — Portal Kebijakan Internal Granostic Center · Dikelola oleh HRGA&IT Department · Hanya untuk penggunaan internal
+  </div>
+</footer>
+
+
+<!-- ══════════════ MODAL PDF VIEWER ══════════════ -->
+<div class="pdf-modal-overlay" id="pdfModalOverlay" onclick="tutup_pdf_modal_overlay(event)">
+  <div class="pdf-modal">
+    <div class="pdf-modal-bar">
+      <div class="pdf-modal-info">
+        <div class="pdf-modal-ikon">📄</div>
+        <div>
+          <div class="pdf-modal-nama" id="pdfModalNama">Dokumen.pdf</div>
+          <div class="pdf-modal-sub">Granostic · Portal Kebijakan Internal Granostic Center</div>
+        </div>
+      </div>
+      <div class="pdf-modal-aksi">
+        <button class="pdf-modal-btn" onclick="buka_pdf_tab_baru()">↗ Buka di Tab Baru</button>
+        <button class="pdf-modal-btn" onclick="unduh_pdf()">⬇ Unduh</button>
+        <button class="pdf-modal-tutup" onclick="tutup_pdf_modal()" title="Tutup">✕</button>
+      </div>
+    </div>
+    <div class="pdf-modal-frame" id="pdfModalFrame">
+      <!-- iframe atau placeholder akan dirender oleh JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   KONFIGURASI — HANYA BAGIAN INI YANG PERLU DIUBAH OLEH HR
+   ══════════════════════════════════════════════════════════════════ */
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRMLwyWJZ1ZdkPDxp15lXfOKiQYqYcj3C9bQbzLPo1rvpnHu231QHVo9nj1NEQQg24yc9eYOmAhfTfp/pub?gid=0&single=true&output=csv";
+
+/* ── DATA & STATE ── */
+let DATA = [];
+let query = '';
+let filterJenis = '';
+let filterKategori = '';
+let halamanAktif = 1;
+const PER_HALAMAN = 8;
+let dataAktif = null;
+
+/* ══════════════════════════════════════════════════════════════════
+   MUAT DATA DARI GOOGLE SHEETS
+   ══════════════════════════════════════════════════════════════════ */
+function tampil_loading() {
+  document.getElementById('daftarPeraturan').innerHTML = `
+    <div class="kosong">
+      <div class="kosong-ikon">⏳</div>
+      <h3>Memuat data peraturan...</h3>
+      <p>Sedang mengambil data dari Google Sheets. Mohon tunggu sebentar.</p>
+    </div>`;
+}
+
+function tampil_error(pesan) {
+  document.getElementById('daftarPeraturan').innerHTML = `
+    <div class="kosong">
+      <div class="kosong-ikon">⚠️</div>
+      <h3>Gagal memuat data</h3>
+      <p>${pesan}</p>
+    </div>`;
+}
+
+function parse_csv(teks) {
+  const baris = [];
+  let barisSkrg = '';
+  let dalamKutip = false;
+  for (let i = 0; i < teks.length; i++) {
+    const c = teks[i];
+    if (c === '"') {
+      dalamKutip = !dalamKutip;
+    } else if (c === '\n' && !dalamKutip) {
+      baris.push(barisSkrg);
+      barisSkrg = '';
+    } else {
+      barisSkrg += c;
+    }
+  }
+  if (barisSkrg) baris.push(barisSkrg);
+
+  if (baris.length < 2) return [];
+
+  function pecah_baris(b) {
+    const hasil = [];
+    let sel = '';
+    let kutip = false;
+    for (let i = 0; i < b.length; i++) {
+      const c = b[i];
+      if (c === '"') {
+        if (kutip && b[i+1] === '"') { sel += '"'; i++; }
+        else kutip = !kutip;
+      } else if (c === ',' && !kutip) {
+        hasil.push(sel.trim());
+        sel = '';
+      } else {
+        sel += c;
+      }
+    }
+    hasil.push(sel.trim());
+    return hasil;
+  }
+
+  const header = pecah_baris(baris[0]); // PERBAIKAN: b[0] diubah ke baris[0] agar terbaca oleh JavaScript
+
+  return baris.slice(1)
+    .filter(b => b.trim())
+    .map((b, idx) => {
+      const kolom = pecah_baris(b);
+      const obj = {};
+      header.forEach((h, i) => {
+        obj[h.trim()] = (kolom[i] || '').trim();
+      });
+      obj.tags = obj.tags
+        ? obj.tags.split(';').map(t => t.trim()).filter(Boolean)
+        : [];
+      if (obj.dicabut === '' || obj.dicabut === '-') obj.dicabut = null;
+      if (obj.mencabut === '' || obj.mencabut === '-') obj.mencabut = null;
+      obj.id = parseInt(obj.id) || (idx + 1);
+      return obj;
+    });
+}
+
+async function muat_data() {
+  if (!SHEET_CSV_URL || SHEET_CSV_URL === 'GANTI_DENGAN_URL_CSV_ANDA') {
+    DATA = DATA_CONTOH;
+    render_sidebar();
+    render_daftar();
+    document.getElementById('bannerKonfigurasi').style.display = 'flex';
+    return;
+  }
+
+  tampil_loading();
+
+  try {
+    const res = await fetch(SHEET_CSV_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const teks = await res.text();
+    const hasil = parse_csv(teks);
+    if (!hasil.length) throw new Error('Sheets kosong atau format kolom tidak sesuai.');
+    DATA = hasil;
+    render_sidebar();
+    render_daftar();
+  } catch (e) {
+    console.error(e);
+    tampil_error(
+      `Tidak dapat terhubung ke Google Sheets.<br><br>
+       <strong>Kemungkinan penyebab:</strong><br>
+       • URL CSV belum diisi atau salah<br>
+       • Google Sheets belum di-publish (File → Publish to web)<br>
+       • Koneksi internet terputus<br><br>
+       <em>Menampilkan data contoh sebagai gantinya...</em>`
+    );
+    setTimeout(() => {
+      DATA = DATA_CONTOH;
+      render_sidebar();
+      render_daftar();
+    }, 2500);
+  }
+}
+
+const DATA_CONTOH = [
+  { id:1, nomor:"SK/HRD/001/2026", jenis:"SK", dept:"HRD",
+    judul:"Kebijakan Kerja Hybrid dan Work From Home Tahun 2026",
+    abstrak:"Keputusan ini mengatur tata cara pelaksanaan kerja hybrid bagi seluruh karyawan. Kebijakan mencakup persentase minimum kehadiran di kantor (3 hari per minggu), persyaratan infrastruktur WFH, protokol komunikasi dan rapat virtual, mekanisme absensi digital melalui sistem HRIS, serta evaluasi kinerja jarak jauh yang terukur dan transparan berdasarkan KPI yang ditetapkan.",
+    tanggal:"2026-03-15", berlaku_sejak:"1 April 2026", ditetapkan_oleh:"Direktur Utama",
+    halaman:"12 hlm", status:"Berlaku", pdf_url:"#",
+    tags:["Ketenagakerjaan","Kebijakan Kerja","SDM"], dicabut:null, mencabut:null },
+  { id:2, nomor:"SOP/HRD/002/2026", jenis:"SOP", dept:"HRD",
+    judul:"Prosedur Rekrutmen dan Seleksi Karyawan Baru",
+    abstrak:"Standar operasional prosedur pelaksanaan rekrutmen internal dan eksternal secara menyeluruh. Mengatur tahapan mulai dari perencanaan kebutuhan SDM, posting lowongan, seleksi berkas administrasi, tes psikologi, wawancara HRD dan user, medical check-up, negosiasi gaji, penerbitan surat penerimaan, hingga program orientasi dan onboarding karyawan baru selama 30 hari pertama.",
+    tanggal:"2026-02-01", berlaku_sejak:"1 Februari 2026", ditetapkan_oleh:"Manajer HRD",
+    halaman:"24 hlm", status:"Berlaku", pdf_url:"#",
+    tags:["Rekrutmen","SDM","Prosedur"], dicabut:null, mencabut:"SOP/HRD/001/2023" },
+  { id:3, nomor:"SK/KEU/001/2026", jenis:"SK", dept:"Keuangan",
+    judul:"Kebijakan Pengeluaran dan Prosedur Reimburse Biaya Operasional",
+    abstrak:"Mengatur batas maksimal pengeluaran operasional berdasarkan level jabatan, prosedur pengajuan dan persetujuan reimburse, penggunaan petty cash, batas nilai pengeluaran yang memerlukan approval direktur, format laporan biaya bulanan, serta sanksi atas penyalahgunaan anggaran operasional.",
+    tanggal:"2026-01-10", berlaku_sejak:"1 Januari 2026", ditetapkan_oleh:"Direktur Keuangan",
+    halaman:"16 hlm", status:"Berlaku", pdf_url:"#",
+    tags:["Keuangan","Anggaran","Kebijakan"], dicabut:null, mencabut:"SK/KEU/002/2024" },
+  { id:4, nomor:"SE/DIR/001/2026", jenis:"SE", dept:"Direksi",
+    judul:"Surat Edaran: Tata Kelola Penggunaan Aset dan Fasilitas Perusahaan",
+    abstrak:"Edaran resmi dari Direksi yang mengatur penggunaan seluruh aset perusahaan termasuk kendaraan dinas, perangkat IT, properti dan ruang kantor, serta fasilitas lainnya. Mengatur tanggung jawab pengguna, prosedur peminjaman, perawatan berkala, dan sanksi atas kerusakan atau penyalahgunaan aset.",
+    tanggal:"2026-04-05", berlaku_sejak:"5 April 2026", ditetapkan_oleh:"Direktur Utama",
+    halaman:"8 hlm", status:"Berlaku", pdf_url:"#",
+    tags:["Aset Perusahaan","Fasilitas","Tata Kelola"], dicabut:null, mencabut:null },
+  { id:5, nomor:"SOP/TI/001/2025", jenis:"SOP", dept:"Teknologi Informasi",
+    judul:"Prosedur Keamanan Informasi dan Keamanan Siber Perusahaan",
+    abstrak:"SOP pengelolaan keamanan data and infrastruktur IT perusahaan yang mencakup kebijakan password, penggunaan VPN, manajemen hak akses berdasarkan role, penanganan insiden siber, prosedur backup data, serta program pelatihan keamanan informasi tahunan untuk seluruh karyawan.",
+    tanggal:"2025-11-20", berlaku_sejak:"1 Desember 2025", ditetapkan_oleh:"Manajer Teknologi Informasi",
+    halaman:"32 hlm", status:"Berlaku", pdf_url:"#",
+    tags:["Keamanan Siber","IT","Prosedur"], dicabut:null, mencabut:null },
+  { id:6, nomor:"PKB/001/2024", jenis:"PKB", dept:"HRD",
+    judul:"Perjanjian Kerja Bersama Granostic Periode 2024–2026",
+    abstrak:"Dokumen PKB yang disepakati antara Direksi dan perwakilan Serikat Pekerja, mengatur hak dan kewajiban karyawan, skema kompensasi, jenis cuti, penggantian biaya kesehatan, prosedur penilaian kinerja, mekanisme promosi, tata cara penyelesaian perselisihan industrial, dan ketentuan pemutusan hubungan kerja.",
+    tanggal:"2024-01-01", berlaku_sejak:"1 Januari 2024", ditetapkan_oleh:"Direktur Utama & Ketua Serikat Pekerja",
+    halaman:"64 hlm", status:"Berlaku", pdf_url:"#",
+    tags:["Hubungan Industrial","Ketenagakerjaan","Kompensasi"], dicabut:null, mencabut:"PKB/001/2021" },
+  { id:7, nomor:"SK/HRD/003/2025", jenis:"SK", dept:"HRD",
+    judul:"Struktur Kompensasi, Tunjangan, and Benefit Karyawan Tahun 2026",
+    abstrak:"Rancangan keputusan tentang skala gaji berdasarkan grade jabatan, komponen tunjangan, benefit kesehatan keluarga, asuransi jiwa, bonus kinerja tahunan berdasarkan skor KPI, dan benefit non-tunai lainnya. Dokumen masih dalam proses review dan persetujuan Direksi.",
+    tanggal:"2025-12-01", berlaku_sejak:"Menunggu pengesahan Direksi", ditetapkan_oleh:"Manajer HRD (Draft)",
+    halaman:"20 hlm", status:"Dalam Review", pdf_url:"#",
+    tags:["Kompensasi","Benefit","SDM"], dicabut:null, mencabut:null },
+  { id:8, nomor:"SK/KEU/002/2024", jenis:"SK", dept:"Keuangan",
+    judul:"Kebijakan Pengeluaran Biaya Operasional (Revisi 2024) — Tidak Berlaku",
+    abstrak:"Dokumen kebijakan pengeluaran operasional yang telah dicabut dan digantikan oleh SK/KEU/001/2026. Dimuat sebagai arsip historis untuk keperluan audit dan referensi.",
+    tanggal:"2024-06-15", berlaku_sejak:"1 Juli 2024", ditetapkan_oleh:"Direktur Keuangan",
+    halaman:"14 hlm", status:"Tidak Berlaku", pdf_url:"#",
+    tags:["Keuangan","Arsip"], dicabut:"SK/KEU/001/2026", mencabut:null },
+  { id:9, nomor:"SE/HRD/002/2025", jenis:"SE", dept:"HRD",
+    judul:"Surat Edaran Kalender Kerja dan Cuti Bersama Tahun 2026",
+    abstrak:"Surat edaran resmi yang memuat kalender kerja efektif, jadwal cuti bersama, daftar hari libur nasional, ketentuan hari kerja pengganti, dan tata cara pengajuan cuti tahunan melalui sistem HRIS untuk seluruh karyawan tahun 2026.",
+    tanggal:"2025-12-15", berlaku_sejak:"1 Januari 2026", ditetapkan_oleh:"Manajer HRD",
+    halaman:"4 hlm", status:"Berlaku", pdf_url:"#",
+    tags:["Cuti","Kalender Kerja","SDM"], dicabut:null, mencabut:null },
+  { id:10, nomor:"POL/HRD/001/2026", jenis:"POL", dept:"HRD",
+    judul:"Kebijakan Anti-Diskriminasi dan Kesetaraan di Tempat Kerja",
+    abstrak:"Kebijakan yang menegaskan komitmen perusahaan terhadap lingkungan kerja yang adil and bebas diskriminasi. Mencakup larangan segala bentuk diskriminasi, prosedur pelaporan via whistleblowing, mekanisme investigasi internal yang rahasia, sanksi bagi pelanggar, dan program edukasi budaya inklusif.",
+    tanggal:"2026-06-01", berlaku_sejak:"1 Juni 2026", ditetapkan_oleh:"Direktur Utama",
+    halaman:"10 hlm", status:"Berlaku", pdf_url:"#",
+    tags:["Ketenagakerjaan","Etika","Kebijakan Perusahaan"], dicabut:null, mencabut:null },
+];
+
+/* ── UTILITAS ── */
+function hl(teks, q) {
+  if (!q || q.length < 2) return teks;
+  const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return teks.replace(re, '<mark>$1</mark>');
+}
+
+function tgl_format(s) {
+  return new Date(s).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+}
+
+function badge_status(st) {
+  if (st === 'Berlaku')      return `<span class="badge-status status-berlaku">● Berlaku</span>`;
+  if (st === 'Tidak Berlaku') return `<span class="badge-status status-nonaktif">◉ Tidak Berlaku</span>`;
+  return                             `<span class="badge-status status-review">⟳ Dalam Review</span>`;
+}
+
+/* ── FILTER & RENDER DAFTAR ── */
+function data_terfilter() {
+  const dept   = document.getElementById('filterDept').value;
+  const tahun  = document.getElementById('filterTahun').value;
+  const status = document.getElementById('filterStatus').value;
+  const q = query.toLowerCase();
+
+  return DATA.filter(r => {
+    if (filterJenis    && r.jenis !== filterJenis)           return false;
+    if (filterKategori && r.jenis !== filterKategori)        return false;
+    if (dept   && r.dept !== dept)                           return false;
+    if (tahun  && !r.tanggal.startsWith(tahun))              return false;
+    if (status && r.status !== status)                       return false;
+    if (q && q.length >= 2) {
+      const cocok = r.judul.toLowerCase().includes(q)
+                 || r.nomor.toLowerCase().includes(q)
+                 || r.abstrak.toLowerCase().includes(q)
+                 || r.dept.toLowerCase().includes(q)
+                 || r.tags.some(t => t.toLowerCase().includes(q));
+      if (!cocok) return false;
+    }
+    return true;
+  });
+}
+
+function data_diurut(arr) {
+  const urut = document.getElementById('pilihUrut').value;
+  return [...arr].sort((a, b) => {
+    if (urut === 'terbaru') return b.tanggal.localeCompare(a.tanggal);
+    if (urut === 'terlama') return a.tanggal.localeCompare(b.tanggal);
+    if (urut === 'az')      return a.judul.localeCompare(b.judul);
+    return 0;
+  });
+}
+
+function render_daftar() {
+  const filtered = data_diurut(data_terfilter());
+  document.getElementById('jmlHasil').textContent = filtered.length;
+
+  const total_hal = Math.ceil(filtered.length / PER_HALAMAN) || 1;
+  if (halamanAktif > total_hal) halamanAktif = 1;
+  const mulai = (halamanAktif - 1) * PER_HALAMAN;
+  const halaman_ini = filtered.slice(mulai, mulai + PER_HALAMAN);
+
+  const el = document.getElementById('daftarPeraturan');
+  if (!halaman_ini.length) {
+    el.innerHTML = `<div class="kosong">
+      <div class="kosong-ikon">🔍</div>
+      <h3>Tidak ada peraturan ditemukan</h3>
+      <p>Coba ubah kata kunci atau hapus filter pencarian.</p>
+    </div>`;
+    document.getElementById('paginasi').innerHTML = '';
+    return;
+  }
+
+  el.innerHTML = halaman_ini.map(r => `
+    <div class="kartu-peraturan" onclick="buka_detail(${r.id})">
+      <div class="kartu-atas">
+        <div class="kartu-kiri">
+          <div class="kartu-nomor-baris">
+            <span class="badge-jenis ${r.jenis}">${r.jenis}</span>
+            <span class="kartu-nomor-teks">${hl(r.nomor, query)}</span>
+          </div>
+          <div class="kartu-judul" onclick="event.stopPropagation(); buka_detail(${r.id})">
+            ${hl(r.judul, query)}
+          </div>
+        </div>
+        <div class="kartu-kanan">${badge_status(r.status)}</div>
+      </div>
+      <div class="kartu-tags">
+        ${r.tags.map(t => `<span class="tag-item">${t}</span>`).join('')}
+      </div>
+      <div class="kartu-abstrak-wrap">
+        <div class="kartu-abstrak-toggle" onclick="event.stopPropagation(); toggle_abstrak(this)">
+          <span>Abstrak</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="kartu-abstrak-isi">${hl(r.abstrak, query)}</div>
+      </div>
+      <div class="kartu-footer">
+        <div class="kartu-meta">
+          <span>🏢 ${r.dept}</span>
+          <span>📅 ${tgl_format(r.tanggal)}</span>
+          <span>📄 ${r.halaman}</span>
+        </div>
+        <div class="tombol-aksi">
+          <button class="tombol-detail" onclick="event.stopPropagation(); buka_detail(${r.id})">Detail →</button>
+          <button class="tombol-unduh" onclick="event.stopPropagation(); ambil_pdf('${r.pdf_url}', '${r.nomor}')">⬇ PDF</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  render_paginasi(total_hal);
+}
+
+function render_paginasi(total) {
+  const el = document.getElementById('paginasi');
+  if (total <= 1) { el.innerHTML = ''; return; }
+  let html = '';
+  html += `<div class="pg ${halamanAktif===1?'nonaktif':''}" onclick="ganti_hal(${halamanAktif-1})">‹</div>`;
+  for (let i = 1; i <= total; i++) {
+    html += `<div class="pg ${i===halamanAktif?'aktif':''}" onclick="ganti_hal(${i})">${i}</div>`;
+  }
+  html += `<div class="pg ${halamanAktif===total?'nonaktif':''}" onclick="ganti_hal(${halamanAktif+1})">›</div>`;
+  el.innerHTML = html;
+}
+
+function ganti_hal(n) {
+  const total = Math.ceil(data_terfilter().length / PER_HALAMAN);
+  if (n < 1 || n > total) return;
+  halamanAktif = n;
+  render_daftar();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggle_abstrak(el) {
+  el.classList.toggle('buka');
+  el.nextElementSibling.classList.toggle('tampil');
+}
+
+function lakukan_cari(val) {
+  query = val || '';
+  halamanAktif = 1;
+  render_daftar();
+}
+
+function terapkan_filter() {
+  halamanAktif = 1;
+  render_daftar();
+}
+
+function ganti_nav(el, jenis) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('aktif'));
+  el.classList.add('aktif');
+  filterJenis = jenis === 'semua' ? '' : jenis;
+  filterKategori = '';
+  document.querySelectorAll('.item-jenis').forEach(i => i.classList.remove('aktif'));
+  const label = jenis === 'semua' ? 'Semua Peraturan' : jenis;
+  document.getElementById('bcAktif').textContent = label;
+  halamanAktif = 1;
+  ke_daftar();
+}
+
+function filter_kategori(el, jenis) {
+  const aktifSekarang = el.classList.contains('aktif');
+  document.querySelectorAll('.item-jenis').forEach(i => i.classList.remove('aktif'));
+  if (!aktifSekarang) { el.classList.add('aktif'); filterKategori = jenis; }
+  else filterKategori = '';
+  halamanAktif = 1;
+  render_daftar();
+}
+
+/* ── SIDEBAR JENIS & STATISTIK ── */
+function render_sidebar() {
+  document.getElementById('stTotal').textContent   = DATA.length;
+  document.getElementById('stBerlaku').textContent  = DATA.filter(r => r.status === 'Berlaku').length;
+  document.getElementById('stNonAktif').textContent = DATA.filter(r => r.status === 'Tidak Berlaku').length;
+  document.getElementById('stReview').textContent   = DATA.filter(r => r.status === 'Dalam Review').length;
+
+  const hitungan = {};
+  DATA.forEach(r => { hitungan[r.jenis] = (hitungan[r.jenis] || 0) + 1; });
+  document.getElementById('daftarJenis').innerHTML = Object.entries(hitungan)
+    .sort((a,b) => a[0].localeCompare(b[0]))
+    .map(([j, n]) => `
+      <li class="item-jenis" onclick="filter_kategori(this, '${j}')">
+        <span class="jenis-nama">${j}</span>
+        <span class="jenis-jumlah">${n}</span>
+      </li>`).join('');
+}
+
+/* ── HALAMAN DETAIL ── */
+function buka_detail(id) {
+  dataAktif = DATA.find(r => r.id === id);
+  if (!dataAktif) return;
+  const r = dataAktif;
+
+  document.getElementById('halamanDaftar').style.display = 'none';
+  document.getElementById('halamanDetail').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  document.getElementById('bcDetailJenis').textContent = r.jenis;
+  document.getElementById('bcDetailJudul').textContent = r.nomor;
+
+  const bj = document.getElementById('dBadgeJenis');
+  bj.textContent = r.jenis;
+  bj.className = `badge-jenis ${r.jenis}`;
+  document.getElementById('dNomor').textContent = r.nomor;
+  document.getElementById('dJudul').textContent = r.judul;
+  document.getElementById('dBadgeBaris').innerHTML =
+    badge_status(r.status) + `&nbsp; <span style="font-size:12px;color:rgba(255,255,255,0.65);">📅 Ditetapkan ${tgl_format(r.tanggal)}</span>`;
+
+  document.getElementById('dMeta').innerHTML = `
+    <div class="meta-sel"><div class="meta-sel-kunci">Nomor</div><div class="meta-sel-nilai">${r.nomor}</div></div>
+    <div class="meta-sel"><div class="meta-sel-kunci">Jenis</div><div class="meta-sel-nilai">${r.jenis}</div></div>
+    <div class="meta-sel"><div class="meta-sel-kunci">Departemen Penerbit</div><div class="meta-sel-nilai">${r.dept}</div></div>
+    <div class="meta-sel"><div class="meta-sel-kunci">Tanggal Penetapan</div><div class="meta-sel-nilai">${tgl_format(r.tanggal)}</div></div>
+    <div class="meta-sel"><div class="meta-sel-kunci">Berlaku Sejak</div><div class="meta-sel-nilai">${r.berlaku_sejak}</div></div>
+    <div class="meta-sel"><div class="meta-sel-kunci">Ditetapkan Oleh</div><div class="meta-sel-nilai">${r.ditetapkan_oleh}</div></div>
+    <div class="meta-sel"><div class="meta-sel-kunci">Jumlah Halaman</div><div class="meta-sel-nilai">${r.halaman}</div></div>
+    <div class="meta-sel"><div class="meta-sel-kunci">Status</div><div class="meta-sel-nilai">${r.status}</div></div>
+  `;
+
+  document.getElementById('dAbstrak').textContent = r.abstract || r.abstrak;
+
+  let statusRows = `<tr><td>Status Berlaku</td><td>${badge_status(r.status)}</td></tr>`;
+  if (r.dicabut)   statusRows += `<tr><td>Dicabut dengan</td><td><a href="#" onclick="buka_detail_by_nomor('${r.dicabut}')">${r.dicabut}</a></td></tr>`;
+  if (r.mencabut)  statusRows += `<tr><td>Mencabut</td><td>${r.mencabut}</td></tr>`;
+  if (!r.dicabut && !r.mencabut)
+    statusRows += `<tr><td>Catatan</td><td>Peraturan ini berdiri sendiri, tidak mencabut maupun dicabut oleh peraturan lain.</td></tr>`;
+  document.getElementById('dStatusBody').innerHTML = statusRows;
+
+  document.getElementById('dPdfNama').textContent = r.nomor.replace(/\//g,'-') + '.pdf';
+
+  const terkait = DATA.filter(x => x.dept === r.dept && x.id !== r.id).slice(0, 4);
+  const seksiT = document.getElementById('seksiTerkait');
+  const listT  = document.getElementById('dTerkait');
+  if (terkait.length) {
+    seksiT.style.display = '';
+    listT.innerHTML = terkait.map(x => `
+      <li class="item-terkait" onclick="buka_detail(${x.id})">
+        <div class="terkait-ikon">📋</div>
+        <div class="terkait-info">
+          <div class="terkait-nomor">${x.nomor} &nbsp;·&nbsp; ${x.jenis} &nbsp;·&nbsp; ${badge_status(x.status)}</div>
+          <div class="terkait-judul">${x.judul}</div>
+        </div>
+      </li>`).join('');
+  } else {
+    seksiT.style.display = 'none';
+  }
+}
+
+function buka_detail_by_nomor(nomor) {
+  const r = DATA.find(x => x.nomor === nomor);
+  if (r) buka_detail(r.id);
+}
+
+function ke_daftar() {
+  document.getElementById('halamanDaftar').style.display = 'block';
+  document.getElementById('halamanDetail').style.display = 'none';
+  render_daftar();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function url_preview_drive(url) {
+  if (!url || url === '#') return null;
+  const matchUc = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (matchUc) {
+    return `https://drive.google.com/file/d/${matchUc[1]}/preview`;
+  }
+  const matchFile = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (matchFile) {
+    return `https://drive.google.com/file/d/${matchFile[1]}/preview`;
+  }
+  return url;
+}
+
+function url_unduh_drive(url) {
+  if (!url || url === '#') return null;
+  const matchUc = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (matchUc) return `https://drive.google.com/uc?export=download&id=${matchUc[1]}`;
+  const matchFile = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (matchFile) return `https://drive.google.com/uc?export=download&id=${matchFile[1]}`;
+  return url;
+}
+
+function tampil_pdf_modal() {
+  if (!dataAktif) return;
+  const url = dataAktif.pdf_url;
+  const nama = document.getElementById('dPdfNama').textContent;
+  document.getElementById('pdfModalNama').textContent = nama;
+
+  const previewUrl = url_preview_drive(url);
+  const frame = document.getElementById('pdfModalFrame');
+
+  if (!previewUrl) {
+    frame.innerHTML = `
+      <div class="pdf-modal-placeholder">
+        <div class="ph-ikon">⚙️</div>
+        <h3>URL PDF belum dikonfigurasi</h3>
+        <p>Isi kolom <strong>pdf_url</strong> di Google Sheets dengan link Google Drive<br>untuk mengaktifkan fitur pratinjau dan unduh.</p>
+      </div>`;
+  } else {
+    frame.innerHTML = `
+      <iframe
+        src="${previewUrl}"
+        allow="autoplay"
+        title="${nama}"
+        loading="lazy">
+      </iframe>`;
+  }
+
+  document.getElementById('pdfModalOverlay').classList.add('buka');
+  document.body.style.overflow = 'hidden';
+}
+
+function tutup_pdf_modal() {
+  document.getElementById('pdfModalOverlay').classList.remove('buka');
+  document.body.style.overflow = '';
+  document.getElementById('pdfModalFrame').innerHTML = '';
+}
+
+function tutup_pdf_modal_overlay(e) {
+  if (e.target === document.getElementById('pdfModalOverlay')) tutup_pdf_modal();
+}
+
+function buka_pdf_tab_baru() {
+  if (!dataAktif) return;
+  const previewUrl = url_preview_drive(dataAktif.pdf_url);
+  if (previewUrl) window.open(previewUrl, '_blank');
+  else alert('URL PDF belum dikonfigurasi di Google Sheets.');
+}
+
+function unduh_pdf() {
+  if (!dataAktif) return;
+  const unduhUrl = url_unduh_drive(dataAktif.pdf_url);
+  if (unduhUrl) {
+    const a = document.createElement('a');
+    a.href = unduhUrl;
+    a.download = document.getElementById('dPdfNama').textContent || 'dokumen.pdf';
+    a.target = '_blank';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    alert('URL PDF belum dikonfigurasi di Google Sheets.');
+  }
+}
+
+function ambil_pdf(url, nomor) {
+  const previewUrl = url_preview_drive(url);
+  if (previewUrl) window.open(previewUrl, '_blank');
+  else alert(`Ganti "pdf_url" untuk ${nomor} dengan link Google Drive.`);
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') tutup_pdf_modal();
+});
+
+/* ══════════════════════════════════════════════════════════
+   LOGIN — Google Apps Script sebagai penjaga pintu
+══════════════════════════════════════════════════════════ */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwySAZPy9fJiICx7xB9MlhSNRF8BViFVE1RU3keZK6sD77UCOikDQ0QcZlni4Jci6ja/exec";
+
+function tampil_pesan_login(teks, jenis) {
+  const el = document.getElementById('loginPesan');
+  el.textContent = teks;
+  el.className = 'login-pesan tampil ' + jenis;
+}
+
+async function lakukan_login() {
+  const username = document.getElementById('inputUsername').value.trim();
+  const password = document.getElementById('inputPassword').value;
+  const tombol = document.getElementById('tombolLogin');
+
+  if (!username || !password) {
+    tampil_pesan_login('Username dan password wajib diisi.', 'error');
+    return;
+  }
+
+  if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA') {
+    tampil_pesan_login('Sistem login belum dikonfigurasi. Hubungi Admin Portal.', 'error');
+    return;
+  }
+
+  tombol.disabled = true;
+  tampil_pesan_login('Memeriksa akses...', 'loading');
+
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ username, password })
+    });
+    const hasil = await res.json();
+
+    if (hasil.sukses) {
+      sessionStorage.setItem('sdip_auth', JSON.stringify({
+        nama: hasil.nama, role: hasil.role, waktu: Date.now()
+      }));
+      buka_aplikasi(hasil.nama, hasil.role);
+    } else {
+      tampil_pesan_login(hasil.pesan || 'Username atau password salah.', 'error');
+      tombol.disabled = false;
+    }
+  } catch (err) {
+    tampil_pesan_login('Gagal terhubung ke server login. Coba lagi.', 'error');
+    tombol.disabled = false;
+  }
+}
+
+function buka_aplikasi(nama, role) {
+  document.getElementById('gerbangLogin').style.display = 'none';
+  document.getElementById('appKonten').style.display = 'block';
+  const stripKanan = document.querySelector('.strip-atas span:last-child');
+  if (stripKanan) {
+    stripKanan.innerHTML = `👤 ${nama} (${role}) &nbsp;|&nbsp; <a href="#" onclick="lakukan_logout(); return false;" style="text-decoration:underline;">Keluar</a>`;
+  }
+  muat_data();
+}
+
+function lakukan_logout() {
+  sessionStorage.removeItem('sdip_auth');
+  location.reload();
+}
+
+document.getElementById('inputPassword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') lakukan_login();
+});
+
+/* ── INIT ── */
+(function initGerbang() {
+  const sesi = sessionStorage.getItem('sdip_auth');
+  if (sesi) {
+    try {
+      const data = JSON.parse(sesi);
+      buka_aplikasi(data.nama, data.role);
+    } catch (e) {
+      sessionStorage.removeItem('sdip_auth');
+    }
+  }
+})();
+</script>
+
+</div><!-- /appKonten -->
+
+</body>
+</html>
