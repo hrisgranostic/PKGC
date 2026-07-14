@@ -132,7 +132,13 @@ nav.nav-utama {
   padding: 0 20px;
   display: flex;
   gap: 0;
+  overflow-x: auto;
+  white-space: nowrap;
 }
+/* Menambahkan custom scrollbar tipis agar rapi jika layar kecil */
+nav.nav-utama::-webkit-scrollbar { height: 4px; }
+nav.nav-utama::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
 .nav-item {
   padding: 11px 18px;
   font-size: 12.5px;
@@ -141,7 +147,6 @@ nav.nav-utama {
   cursor: pointer;
   border-bottom: 3px solid transparent;
   transition: all .15s;
-  white-space: nowrap;
   letter-spacing: 0.2px;
 }
 .nav-item:hover { color: white; background: rgba(255,255,255,0.07); }
@@ -334,10 +339,15 @@ nav.nav-utama {
   letter-spacing: 0.4px;
   white-space: nowrap;
 }
-.badge-jenis.SK  { background: #dbeafe; color: #1e40af; }
-.badge-jenis.Pedoman { background: #f3e8ff; color: #6b21a8; }
-.badge-jenis.Memo  { background: #fef9c3; color: #854d0e; }
-.badge-jenis.Legalitas { background: #dcfce7; color: #166534; }
+
+/* Penyesuaian pewarnaan label (badge) agar mendeteksi nama kategori walau ada spasi */
+.badge-jenis[class*="Surat"]      { background: #dbeafe; color: #1e40af; }
+.badge-jenis[class*="Pedoman"]    { background: #f3e8ff; color: #6b21a8; }
+.badge-jenis[class*="Prosedur"]   { background: #ffe4e6; color: #9f1239; }
+.badge-jenis[class*="Memo"]       { background: #fef9c3; color: #854d0e; }
+.badge-jenis[class*="Legalitas"]  { background: #dcfce7; color: #166534; }
+.badge-jenis[class*="Perjanjian"] { background: #e0f2fe; color: #0369a1; }
+.badge-jenis[class*="Lain-lain"]  { background: #f3f4f6; color: #374151; }
 
 .kartu-nomor-teks { font-size: 12px; color: var(--abu); font-weight: 600; }
 
@@ -1046,10 +1056,14 @@ footer {
 <!-- NAV -->
 <nav class="nav-utama">
   <div class="nav-item aktif" onclick="ganti_nav(this,'semua')">Beranda</div>
-  <div class="nav-item" onclick="ganti_nav(this,'SK')">Surat Keputusan</div>
+  <!-- Parameter pada ganti_nav(...) sekarang diatur SAMA PERSIS dengan database -->
+  <div class="nav-item" onclick="ganti_nav(this,'Surat Keputusan')">Surat Keputusan</div>
   <div class="nav-item" onclick="ganti_nav(this,'Pedoman')">Pedoman</div>
-  <div class="nav-item" onclick="ganti_nav(this,'Memo')">Memo Internal</div>
+  <div class="nav-item" onclick="ganti_nav(this,'Prosedur')">Prosedur</div>
+  <div class="nav-item" onclick="ganti_nav(this,'Memo Internal')">Memo Internal</div>
   <div class="nav-item" onclick="ganti_nav(this,'Legalitas')">Legalitas</div>
+  <div class="nav-item" onclick="ganti_nav(this,'Perjanjian Kerja Sama')">Perjanjian Kerja Sama</div>
+  <div class="nav-item" onclick="ganti_nav(this,'Lain-lain')">Lain-lain</div>
 </nav>
 
 <!-- BANNER KONFIGURASI — hanya muncul jika URL Sheets belum diisi -->
@@ -1436,61 +1450,61 @@ async function muat_data() {
 }
 
 const DATA_CONTOH = [
-  { id:1, nomor:"SK/HRD/001/2026", jenis:"SK", dept:"HRGA&IT",
+  { id:1, nomor:"SK/HRD/001/2026", jenis:"Surat Keputusan", dept:"HRGA&IT",
     judul:"Kebijakan Kerja Hybrid dan Work From Home Tahun 2026",
     abstrak:"Keputusan ini mengatur tata cara pelaksanaan kerja hybrid bagi seluruh karyawan. Kebijakan mencakup persentase minimum kehadiran di kantor (3 hari per minggu), persyaratan infrastruktur WFH, protokol komunikasi dan rapat virtual, mekanisme absensi digital melalui sistem HRIS, serta evaluasi kinerja jarak jauh yang terukur dan transparan berdasarkan KPI yang ditetapkan.",
     tanggal:"2026-03-15", berlaku_sejak:"1 April 2026", ditetapkan_oleh:"Direktur Utama",
     halaman:"12 hlm", status:"Berlaku", pdf_url:"#",
     tags:["Ketenagakerjaan","Kebijakan Kerja","SDM"], dicabut:null, mencabut:null },
-  { id:2, nomor:"SOP/HRD/002/2026", jenis:"SOP", dept:"HRGA&IT",
+  { id:2, nomor:"SOP/HRD/002/2026", jenis:"Prosedur", dept:"HRGA&IT",
     judul:"Prosedur Rekrutmen dan Seleksi Karyawan Baru",
     abstrak:"Standar operasional prosedur pelaksanaan rekrutmen internal dan eksternal secara menyeluruh. Mengatur tahapan mulai dari perencanaan kebutuhan SDM, posting lowongan, seleksi berkas administrasi, tes psikologi, wawancara HRD dan user, medical check-up, negosiasi gaji, penerbitan surat penerimaan, hingga program orientasi dan onboarding karyawan baru selama 30 hari pertama.",
     tanggal:"2026-02-01", berlaku_sejak:"1 Februari 2026", ditetapkan_oleh:"Manajer HRD",
     halaman:"24 hlm", status:"Berlaku", pdf_url:"#",
     tags:["Rekrutmen","SDM","Prosedur"], dicabut:null, mencabut:"SOP/HRD/001/2023" },
-  { id:3, nomor:"SK/KEU/001/2026", jenis:"SK", dept:"Finacc",
+  { id:3, nomor:"SK/KEU/001/2026", jenis:"Surat Keputusan", dept:"Finacc",
     judul:"Kebijakan Pengeluaran dan Prosedur Reimburse Biaya Operasional",
     abstrak:"Mengatur batas maksimal pengeluaran operasional berdasarkan level jabatan, prosedur pengajuan dan persetujuan reimburse, penggunaan petty cash, batas nilai pengeluaran yang memerlukan approval direktur, format laporan biaya bulanan, serta sanksi atas penyalahgunaan anggaran operasional.",
     tanggal:"2026-01-10", berlaku_sejak:"1 Januari 2026", ditetapkan_oleh:"Direktur Keuangan",
     halaman:"16 hlm", status:"Berlaku", pdf_url:"#",
     tags:["Keuangan","Anggaran","Kebijakan"], dicabut:null, mencabut:"SK/KEU/002/2024" },
-  { id:4, nomor:"SE/DIR/001/2026", jenis:"SE", dept:"Direksi",
+  { id:4, nomor:"SE/DIR/001/2026", jenis:"Memo Internal", dept:"Direksi",
     judul:"Surat Edaran: Tata Kelola Penggunaan Aset dan Fasilitas Perusahaan",
     abstrak:"Edaran resmi dari Direksi yang mengatur penggunaan seluruh aset perusahaan termasuk kendaraan dinas, perangkat IT, properti dan ruang kantor, serta fasilitas lainnya. Mengatur tanggung jawab pengguna, prosedur peminjaman, perawatan berkala, dan sanksi atas kerusakan atau penyalahgunaan aset.",
     tanggal:"2026-04-05", berlaku_sejak:"5 April 2026", ditetapkan_oleh:"Direktur Utama",
     halaman:"8 hlm", status:"Berlaku", pdf_url:"#",
     tags:["Aset Perusahaan","Fasilitas","Tata Kelola"], dicabut:null, mencabut:null },
-  { id:5, nomor:"SOP/TI/001/2025", jenis:"SOP", dept:"HRGA&IT",
+  { id:5, nomor:"SOP/TI/001/2025", jenis:"Prosedur", dept:"HRGA&IT",
     judul:"Prosedur Keamanan Informasi dan Keamanan Siber Perusahaan",
     abstrak:"SOP pengelolaan keamanan data and infrastruktur IT perusahaan yang mencakup kebijakan password, penggunaan VPN, manajemen hak akses berdasarkan role, penanganan insiden siber, prosedur backup data, serta program pelatihan keamanan informasi tahunan untuk seluruh karyawan.",
     tanggal:"2025-11-20", berlaku_sejak:"1 Desember 2025", ditetapkan_oleh:"Manajer Teknologi Informasi",
     halaman:"32 hlm", status:"Berlaku", pdf_url:"#",
     tags:["Keamanan Siber","IT","Prosedur"], dicabut:null, mencabut:null },
-  { id:6, nomor:"PKB/001/2024", jenis:"PKB", dept:"HRGA&IT",
+  { id:6, nomor:"PKB/001/2024", jenis:"Perjanjian Kerja Sama", dept:"HRGA&IT",
     judul:"Perjanjian Kerja Bersama Granostic Periode 2024–2026",
     abstrak:"Dokumen PKB yang disepakati antara Direksi dan perwakilan Serikat Pekerja, mengatur hak dan kewajiban karyawan, skema kompensasi, jenis cuti, penggantian biaya kesehatan, prosedur penilaian kinerja, mekanisme promosi, tata cara penyelesaian perselisihan industrial, dan ketentuan pemutusan hubungan kerja.",
     tanggal:"2024-01-01", berlaku_sejak:"1 Januari 2024", ditetapkan_oleh:"Direktur Utama & Ketua Serikat Pekerja",
     halaman:"64 hlm", status:"Berlaku", pdf_url:"#",
     tags:["Hubungan Industrial","Ketenagakerjaan","Kompensasi"], dicabut:null, mencabut:"PKB/001/2021" },
-  { id:7, nomor:"SK/HRD/003/2025", jenis:"SK", dept:"HRGA&IT",
+  { id:7, nomor:"SK/HRD/003/2025", jenis:"Surat Keputusan", dept:"HRGA&IT",
     judul:"Struktur Kompensasi, Tunjangan, and Benefit Karyawan Tahun 2026",
     abstrak:"Rancangan keputusan tentang skala gaji berdasarkan grade jabatan, komponen tunjangan, benefit kesehatan keluarga, asuransi jiwa, bonus kinerja tahunan berdasarkan skor KPI, dan benefit non-tunai lainnya. Dokumen masih dalam proses review dan persetujuan Direksi.",
     tanggal:"2025-12-01", berlaku_sejak:"Menunggu pengesahan Direksi", ditetapkan_oleh:"Manajer HRD (Draft)",
     halaman:"20 hlm", status:"Dalam Review", pdf_url:"#",
     tags:["Kompensasi","Benefit","SDM"], dicabut:null, mencabut:null },
-  { id:8, nomor:"SK/KEU/002/2024", jenis:"SK", dept:"Finacc",
+  { id:8, nomor:"SK/KEU/002/2024", jenis:"Surat Keputusan", dept:"Finacc",
     judul:"Kebijakan Pengeluaran Biaya Operasional (Revisi 2024) — Tidak Berlaku",
     abstrak:"Dokumen kebijakan pengeluaran operasional yang telah dicabut dan digantikan oleh SK/KEU/001/2026. Dimuat sebagai arsip historis untuk keperluan audit dan referensi.",
     tanggal:"2024-06-15", berlaku_sejak:"1 Juli 2024", ditetapkan_oleh:"Direktur Keuangan",
     halaman:"14 hlm", status:"Tidak Berlaku", pdf_url:"#",
     tags:["Keuangan","Arsip"], dicabut:"SK/KEU/001/2026", mencabut:null },
-  { id:9, nomor:"SE/HRD/002/2025", jenis:"SE", dept:"HRGA&IT",
+  { id:9, nomor:"SE/HRD/002/2025", jenis:"Memo Internal", dept:"HRGA&IT",
     judul:"Surat Edaran Kalender Kerja dan Cuti Bersama Tahun 2026",
     abstrak:"Surat edaran resmi yang memuat kalender kerja efektif, jadwal cuti bersama, daftar hari libur nasional, ketentuan hari kerja pengganti, dan tata cara pengajuan cuti tahunan melalui sistem HRIS untuk seluruh karyawan tahun 2026.",
     tanggal:"2025-12-15", berlaku_sejak:"1 Januari 2026", ditetapkan_oleh:"Manajer HRD",
     halaman:"4 hlm", status:"Berlaku", pdf_url:"#",
     tags:["Cuti","Kalender Kerja","SDM"], dicabut:null, mencabut:null },
-  { id:10, nomor:"POL/HRD/001/2026", jenis:"POL", dept:"HRGA&IT",
+  { id:10, nomor:"POL/HRD/001/2026", jenis:"Pedoman", dept:"HRGA&IT",
     judul:"Kebijakan Anti-Diskriminasi dan Kesetaraan di Tempat Kerja",
     abstrak:"Kebijakan yang menegaskan komitmen perusahaan terhadap lingkungan kerja yang adil and bebas diskriminasi. Mencakup larangan segala bentuk diskriminasi, prosedur pelaporan via whistleblowing, mekanisme investigasi internal yang rahasia, sanksi bagi pelanggar, dan program edukasi budaya inklusif.",
     tanggal:"2026-06-01", berlaku_sejak:"1 Juni 2026", ditetapkan_oleh:"Direktur Utama",
@@ -1507,7 +1521,7 @@ function hl(teks, q) {
 
 function tgl_format(s) {
   const d = new Date(s);
-  if (isNaN(d.getTime())) return s; // Fallback jika format tanggal tidak standar
+  if (isNaN(d.getTime())) return s; 
   return d.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
 }
 
