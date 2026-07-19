@@ -305,8 +305,8 @@ nav.nav-utama::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); bord
 .kartu-peraturan {
   background: var(--putih);
   border: 1px solid var(--border);
-  border-radius: 6px;
   margin-bottom: 10px;
+  border-radius: 6px;
   overflow: hidden;
   transition: box-shadow .18s;
   cursor: pointer;
@@ -907,10 +907,7 @@ footer {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background:
-    radial-gradient(circle at 12% 12%, rgba(0,166,147,0.28), transparent 45%),
-    radial-gradient(circle at 88% 90%, rgba(47,111,237,0.22), transparent 45%),
-    linear-gradient(135deg, var(--biru-tua) 0%, #060912 100%);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -920,13 +917,13 @@ footer {
   background: var(--putih);
   border-radius: 10px;
   width: 100%;
-  max-width: 380px;
+  max-width: 720px;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
 }
 .login-kepala {
   background: var(--merah);
-  padding: 28px 28px 22px;
+  padding: 28px 28px 24px;
   text-align: center;
   border-bottom: 4px solid var(--merah-tua);
 }
@@ -943,18 +940,52 @@ footer {
   font-size: 11.5px;
   margin-top: 4px;
 }
-.login-badan { padding: 26px 28px 28px; }
-.login-grup { margin-bottom: 16px; }
+
+/* Visi Misi ditambahkan di dalam login-kepala */
+.login-visimisi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 20px;
+  margin-top: 24px;
+  text-align: left;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 18px 20px;
+  border-radius: 8px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.95);
+  line-height: 1.6;
+}
+.login-vm-judul {
+  font-weight: 800;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  display: inline-block;
+}
+.login-vm-kolom ol { margin: 0; padding-left: 16px; }
+.login-vm-kolom li { margin-bottom: 6px; padding-left: 2px; }
+.login-vm-kolom li:last-child { margin-bottom: 0; }
+
+.login-badan { 
+  padding: 24px 28px 26px; 
+  max-width: 360px;
+  margin: 0 auto; 
+}
+.login-grup { margin-bottom: 14px; }
 .login-label {
-  font-size: 11px; font-weight: 700; color: var(--abu);
-  text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; display: block;
+  font-size: 10.5px; font-weight: 700; color: var(--abu);
+  text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 5px; display: block;
 }
 .login-input {
   width: 100%;
-  padding: 11px 13px;
+  padding: 10px 12px;
   border: 1.5px solid var(--border);
   border-radius: 5px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-family: inherit;
   outline: none;
   background: var(--abu-bg);
@@ -968,8 +999,8 @@ footer {
   color: white;
   border: none;
   border-radius: 5px;
-  padding: 12px;
-  font-size: 13.5px;
+  padding: 11px;
+  font-size: 13px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
@@ -993,10 +1024,15 @@ footer {
   text-align: center;
   font-size: 10.5px;
   color: var(--abu);
-  margin-top: 18px;
+  margin-top: 16px;
   line-height: 1.6;
 }
 #appKonten { display: none; }
+
+@media (max-width: 768px) {
+  .login-visimisi-grid { grid-template-columns: 1fr; gap: 12px; }
+  .kotak-login { max-width: 420px; }
+}
 </style>
 </head>
 <body>
@@ -1007,10 +1043,28 @@ footer {
 <div id="gerbangLogin">
   <div class="kotak-login">
     <div class="login-kepala">
-      <img id="loginLogo" src="data:image/png;base64,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" alt="Granostic">
+      <img id="loginLogo" src="https://lh3.googleusercontent.com/d/1Bo0fEb-lIgrCfHMjO8G6a4rd0L9rn5CC" alt="Granostic">
       <h1>Portal Kebijakan</h1>
       <p>Akses khusus karyawan berwenang<br>(Supervisor dan Manager)</p>
+      
+      <!-- Visi Misi ditambahkan di dalam login-kepala -->
+      <div class="login-visimisi-grid">
+        <div class="login-vm-kolom">
+          <div class="login-vm-judul">Visi</div>
+          <div>Menjadi nilai tambah dan pembeda dalam pelayanan laboratorium terbaik di Indonesia.</div>
+        </div>
+        <div class="login-vm-kolom">
+          <div class="login-vm-judul">Misi</div>
+          <ol>
+            <li>Memberikan pelayanan yang profesional, hasil pemeriksaan yang akurat dan terpercaya, dan didukung oleh perkembangan kemajuan ilmu pengetahuan dan teknologi.</li>
+            <li>Digitalisasi layanan dengan menggunakan digital platform.</li>
+            <li>Mengembangkan jaringan kerjasama dan produk-produk terbaru.</li>
+            <li>Menjadi pusat pelayanan dan diagnosa nyeri yang modern dan terkini.</li>
+          </ol>
+        </div>
+      </div>
     </div>
+    
     <div class="login-badan">
       <div class="login-pesan" id="loginPesan"></div>
       <div class="login-grup">
@@ -1023,8 +1077,7 @@ footer {
       </div>
       <button class="tombol-login" id="tombolLogin" onclick="lakukan_login()">Masuk</button>
       <div class="login-footer">
-        Lupa password? Hubungi HRGA&amp;IT Department (ext. 301)<br>
-        untuk permintaan reset akses.
+        Lupa password? Hubungi Admin Portal (ext. 301)<br>
       </div>
     </div>
   </div>
@@ -1040,11 +1093,11 @@ footer {
 <!-- HEADER -->
 <header>
   <div class="logo-area">
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAVMAAABQCAYAAACkqJZuAABXPElEQVR42u2deXxeVZ3/399z7rNmawsFWQQhKSowoLSsom2gG20pm4m7Iy7gOP6cxXFmXCCJOqOOzriMzggz6qjjqAmytKVNk0ISFxBpAZWWpQv7Wkqb5Nmfe8/398e9T/aUrlg039crUpPnPvfcc8/5nO/6+QpTMiVTMiV/SFE1iLiGm1e/kVT6Wpw7XwO/TrzYNlS/u2Vx45cRUVQFET1UH0Ne9vvpBHMhAqBTq2pKpuRPFEhvWbdA0rEOMV6dK+RBFfE8TCpFMDjYUfeq6e/aMHt2AKLIoYkV3kGcJKGjw8ydOVPohb7WeQEiGgHneGlpMXPnzTMAffPmOUAP5VNoSqZkSg4ARoCe+LO1R2D1J4KpC3IZX8R4AFouq18u+7HDDm/qf2b77xH5HO1qQYI/fs1UVeb29tq+efMcIm48YPZ4r10QS5Wfy6aCRNkkXJWfTJTyv1u4MDchcLarhQ5oanJTwDolU/LHJXN7ery+xka/flXn//Nqpn/D79/lizHeGExxEo/jSsVnc1qc9czy5blD1dw/MJqpqqGjQxAJ+sAHeF1392GlkjkddbON8GdgXoP6RwW7/BoTl4QhIYH4QbZsivWr1u2SW9c9JSJbQO51jg1iCvdvWSLFURM/L9Jup2RKpuSPRkTlNFU3sdUqIlouC8irqk3yeOCBSAn8IwPTlhbDKacIEqrdJ9yy7kjryRKES4KSnmfjsZkSj4MqBAEaBOAcFb+phJMFxh4lnn09xswHweRzQHJr/a2394mVmwoD22/ra2zMD2mrzTiYAtUpmZI/oHk+WlpbhdbWfXLNKbb0UkayiGjZ90Nrt/XQnBZvnyezA0NzCKKz1va8QZUPo3qFTaYOV1W0WECLRecKBRdNhhAGoMbPmpRVS6KqIcqKiCexWL1NJeoJgvcnqw/b0rD69h9K4L6z+WJ5amo1T8mU/CFVyQkBU2lr28ev406Ej0yobaqqJBLqSsUnvLg+Cghth6Yitfc+0yj6BlB/y5pTTDL1SXXubTaV9lw+h/P9QEQqn9sfn6xTVSdgJJ4wkkzgstkXMXJd2ZdvPLZ03nO7ebFTMiVTcpC00hO7umbGXdLmcjlIAzlIWStB3C9vWbJk+95quEd2daWrS7LB1tS8NhgcLImIjXBUEfCmz/D8HTs+unX5om/R3m5pbj4kA1B7p5n29HiI+Eddd1266riTPiXoxyWeSGo2gz844AvYykSM83+EWmdkBiiqqAgCUplUGQO+RkQMgJZLzpWKgYnHZwCfjPn+/yLyLC0thqmUqimZkpfHtBfRYzs6kpKa9nM/FhwTi3sOXw0xXJCMWy3qA6ieFSk4L+3XFFFaWsxzbW3ZmtXrLtdi6WZv2rRZWiqFrkDrAUrw4ovf2Lp80bdo0SFr+JUMpkJ7u6Gx0W+4ZfU5JNPftsnU6UFmEJcZDETEiog3DjwFpwoiYiUWE/E8wZgIaKO5doq6AHwf9X1VCCKXgBmhORvASTyBPzj4/m2XLtx0KJ9QUzIlf+RSK9arJnAgBpxDbAylVLPX39TW5mhpMVuWzN903I9+dHbi8KM/qMo8yv40PG+LBv6Pt168sDMCc3coT8pLg+mw1hg0rOz+C0nEvyrGJPz+XX4EonbM552CGs+zkkxaRHC5HFr2n3fl8lPAdhH6UfEVEoJOR+QIlGMlHq+ziaSngY8rFFDnfAGr4Gx1jRcMDt60bfnC7zW1t9uOKSCdkin5g4iATxAoqg7nDOAIfCNRJs++Aurj73rXTuDL0c+wtLSYQx1IXxpMh4HUNaxa96+muupvXTaLqgYT5YMBmGTK4Hm4fG4HuXyPs3QJbr3Ls21b88L+Sf0wN3bNxJZP0pz/JpBFwJu8mtq4y+cQY3GF3LNa1g/T0mI6Nm6cMu2n5OU1cVsRWoGOEXGGJpRWoPVPq8AkNDZl2DUXao2i+5O33tbmRuWpg9KBgQ5eKRaot9sF1NFhaG4O6let+66trb0yGOj3UbWM0kZVVXEmkbRiLa5YWC/l8n8Fcb3lkfnzn5vge8Oc1IpsbFJE3DZ4nvDnl8CXTri1+yRyuXeAvt8kk8f5u3Z+6JErFj8/Zd5PycsAnoZeDADzqOQ2K5MFq9sAVFAMvQjzcK8ETerQU3lF+0Zrt6+ofe5Nqsn39lqam/36lV3/7dXWXukP9JcFYqMCS6oOEWNraqwr5H7vgvLnt9718xtoawsXUnu7nTtzpowqD514kYU1+1H5ad+8ecEjIg8Dba+7sfubxfLOcx+5ZPGq6AScAtIpOfDSooZ5GBrFj9bo8Dpdr3XA4Uh5OhKrQvFwfoDxMIR7obY1H6YMnwUv0Xv9XNqEreDux0wO6E2zLwZ3VfO1YvOmP+M+Zp90nVPQO2eSbeM6pW81YseE/U8X/dZ7+zYF/WjZ86eU9u7vX3VvU/g78fHOV33ov6VFHuf5doL/nX43xd0bcT31v4Z8MJHLfyFm67F2+gNdsDbiG7/X0b0rK9Nn8+yFcdTLP0e+83X6Fl0J/O6NoK64G10L7rzfzDf2rDqqi7t61N/z03pWfQvsHt1Pduc9UeTf+YjzOvdwX+Zst69+Yv2VvdF1+jeNzeH9n7P/7p7e9W9T+BmVLxT2/770Lrbt85asWPD938X/8H7/36un/X7ff+9v/+Nf0v7+/sD/YfM/f9K76f/wH+w8//N73f/4df/9r6Bv7v3F+P/qP9g57+Zrxh/Zfzr/XtH9x9oH/n238zrHd2/b1T/7vJl+++7t6v7v+Cef8F/8O4f3C+vv98/0Nszzvf7+vv7/v8B" alt="Granostic" style="height:48px; width:auto; display:block;">
+    <img src="https://lh3.googleusercontent.com/d/13fYVo8GG4_R75m5fcqNieWpTnePyB0cb" alt="Granostic" style="height:48px; width:auto; display:block;">
   </div>
   <div class="header-divider"></div>
   <div>
-    <div class="nama-perusahaan">Granostic</div>
+    <div class="nama-perusahaan">Granostic Center</div>
     <div class="nama-dept">HRGA&amp;IT Department</div>
   </div>
   <div class="search-header">
@@ -1208,7 +1261,7 @@ footer {
     <div class="detail-body">
 
       <!-- Abstrak -->
-      <div class="detail-seksi-judul">Abstrak / Ringkasan Peraturan</div>
+      <div class="detail-seksi-judul">Abstrak</div>
       <div class="detail-abstrak" id="dAbstrak"></div>
 
       <!-- Status Peraturan -->
@@ -1255,7 +1308,7 @@ footer {
     <div class="footer-kolom">
       <div class="footer-kolom-judul">Tentang PKGC</div>
       <p style="font-size:12px;line-height:1.7;color:rgba(255,255,255,0.6);">
-        PKGC adalah portal kebijakan internal Granostic Center untuk mendistribusikan peraturan, SOP, dan kebijakan perusahaan kepada seluruh karyawan secara terpusat.
+        PKGC adalah portal kebijakan internal Granostic Center untuk mendistribusikan peraturan, prosedur, dan kebijakan perusahaan kepada seluruh karyawan secara terpusat.
       </p>
     </div>
     <div class="footer-kolom">
