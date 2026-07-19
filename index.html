@@ -135,7 +135,6 @@ nav.nav-utama {
   overflow-x: auto;
   white-space: nowrap;
 }
-/* Menambahkan custom scrollbar tipis agar rapi jika layar kecil */
 nav.nav-utama::-webkit-scrollbar { height: 4px; }
 nav.nav-utama::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
 
@@ -340,7 +339,6 @@ nav.nav-utama::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); bord
   white-space: nowrap;
 }
 
-/* Penyesuaian pewarnaan label (badge) agar mendeteksi nama kategori walau ada spasi */
 .badge-jenis[class*="Surat"]      { background: #dbeafe; color: #1e40af; }
 .badge-jenis[class*="Pedoman"]    { background: #f3e8ff; color: #6b21a8; }
 .badge-jenis[class*="Prosedur"]   { background: #ffe4e6; color: #9f1239; }
@@ -920,7 +918,7 @@ footer {
   background: var(--putih);
   border-radius: 10px;
   width: 100%;
-  max-width: 380px;
+  max-width: 400px; /* Diperlebar sedikit dari 380px agar list Visi Misi lega */
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.35);
 }
@@ -943,6 +941,44 @@ footer {
   font-size: 11.5px;
   margin-top: 4px;
 }
+/* Style Baru untuk Visi Misi */
+.login-visimisi {
+  margin-top: 18px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  text-align: left;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+}
+.login-visimisi-judul {
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+  letter-spacing: 0.5px;
+  font-size: 11px;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  padding-bottom: 3px;
+  display: inline-block;
+}
+.login-visimisi-teks {
+  margin-bottom: 10px;
+}
+.login-visimisi-teks:last-child {
+  margin-bottom: 0;
+}
+.login-visimisi ol {
+  margin: 0;
+  padding-left: 18px;
+}
+.login-visimisi li {
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+
 .login-badan { padding: 26px 28px 28px; }
 .login-grup { margin-bottom: 16px; }
 .login-label {
@@ -1010,6 +1046,24 @@ footer {
       <img id="loginLogo" src="https://lh3.googleusercontent.com/d/1Bo0fEb-lIgrCfHMjO8G6a4rd0L9rn5CC" alt="Granostic">
       <h1>Portal Kebijakan</h1>
       <p>Akses khusus karyawan berwenang<br>(Supervisor dan Manager)</p>
+      
+      <!-- Penambahan Elemen Visi Misi -->
+      <div class="login-visimisi">
+        <div class="login-visimisi-judul">Visi</div>
+        <div class="login-visimisi-teks">Menjadi nilai tambah dan pembeda dalam pelayanan laboratorium terbaik di Indonesia.</div>
+        
+        <div class="login-visimisi-judul">Misi</div>
+        <div class="login-visimisi-teks" style="margin-bottom: 0;">
+          <ol>
+            <li>Memberikan pelayanan yang profesional, hasil pemeriksaan yang akurat dan terpercaya, dan didukung oleh perkembangan kemajuan ilmu pengetahuan dan teknologi.</li>
+            <li>Digitalisasi layanan dengan menggunakan digital platform.</li>
+            <li>Mengembangkan jaringan kerjasama dan produk-produk terbaru.</li>
+            <li>Menjadi pusat pelayanan dan diagnosa nyeri yang modern dan terkini.</li>
+          </ol>
+        </div>
+      </div>
+      <!-- /Penambahan Elemen Visi Misi -->
+
     </div>
     <div class="login-badan">
       <div class="login-pesan" id="loginPesan"></div>
@@ -1023,7 +1077,7 @@ footer {
       </div>
       <button class="tombol-login" id="tombolLogin" onclick="lakukan_login()">Masuk</button>
       <div class="login-footer">
-        Lupa password? Hubungi HRGA&amp;IT Department (ext. 301)<br>
+        Lupa password? Hubungi Admin Portal (ext. 301)<br>
         untuk permintaan reset akses.
       </div>
     </div>
@@ -1148,7 +1202,7 @@ footer {
         <div class="kotak-kepala">📞 Contact Us</div>
         <div class="kotak-isi">
           <div class="info-kontak">
-            <strong>Pertanyaan seputar peraturan:</strong><br>
+            <strong>Pertanyaan seputar peraturan</strong><br>
             📞 Ext. 301<br>
             📧 hrga.granostic@gmail.com<br>
             📍 Granostic Tower, Lt. 3<br>
@@ -1845,11 +1899,11 @@ function buka_pdf_tab_baru() {
 }
 
 function unduh_pdf() {
-  alert('Mohon maaf, fitur download dokumen telah dinonaktifkan. Segera hubungi Admin Portal Kebijakan untuk informasi lebih lanjut.');
+  alert('Mohon maaf, fitur download dokumen telah dinonaktifkan.');
 }
 
 function ambil_pdf(url, nomor) {
-  alert('Mohon maaf, fitur download dokumen telah dinonaktifkan. Segera hubungi Admin Portal Kebijakan untuk informasi lebih lanjut.');
+  alert('Mohon maaf, fitur download dokumen telah dinonaktifkan.');
 }
 
 document.addEventListener('keydown', e => {
@@ -1876,7 +1930,7 @@ async function lakukan_login() {
   }
 
   if (!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'GANTI_DENGAN_URL_APPS_SCRIPT_ANDA') {
-    tampil_pesan_login('Sistem login belum dikonfigurasi. Hubungi Admin Portal Kebijakan.', 'error');
+    tampil_pesan_login('Sistem login belum dikonfigurasi. Hubungi Admin Portal.', 'error');
     return;
   }
 
